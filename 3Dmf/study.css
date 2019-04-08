@@ -1,0 +1,113 @@
+* {
+	padding: 0;
+	margin: 0;
+}
+ul,
+ol,
+li {
+	list-style: none;
+}
+h1 {
+	text-align: center;
+	margin-top: 100px;
+}
+body {
+	--boxHeight: 300px;			/*用于计算每个面向上移动的距离*/
+}
+
+@keyframes change {
+	0% {
+		transform: rotateX(0deg) rotateY(0deg);
+	}
+	33% {
+		transform: rotateX(120deg) rotateY(240deg);
+	}
+	66% {
+		transform: rotateX(240deg) rotateY(480deg);
+	}
+	100% {
+		transform: rotateX(360deg) rotateY(720deg);
+	}
+}
+
+/*最外层盒子*/
+.box{
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	width: 300px;
+	height: 300px;
+	transform: translate(-50%, -50%);
+	
+}
+.box:hover .boxs{
+	animation-play-state: paused;
+}
+/*整个魔方*/
+.boxs {
+	width: 100%;
+	height: 100%;
+	transform-style: preserve-3d;						/*使被转换的子元素保留其 3D 转换：*/
+	/*transform-origin: 10% 10%;						定义了观察者的视角相对于显示元素的位置*/
+	/*perspective: 500px;								设置用户与元素3d空间Z平面之间的距离*/
+	animation: change 10s linear infinite;
+	backface-visibility: hidden;
+}
+/*六个面通用样式*/
+.boxs ul{
+	height: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+/*每个面9个小块*/
+.boxs ul li{
+	width: calc(calc(100% / 3) - 1px);
+	height: calc(calc(100% / 3) - 1px);
+	text-align: center;
+	font-size: 20px;
+	line-height: 99px;
+	border-radius: 5px;
+}
+/*前*/
+.boxs .front{
+	transform: translateZ(150px);
+}
+.boxs .front li{
+	background-color: #0f0;
+}
+/*后*/
+.boxs .after{
+	transform: translateZ(-150px) translateY(calc(var(--boxHeight) * -1)) rotateY(180deg);
+}
+.boxs .after li{
+	background-color: #00f;
+}
+/*左*/
+.boxs .left{
+	transform: translateX(-150px) translateY(calc(var(--boxHeight) * -2)) rotateY(-90deg);
+}
+.boxs .left li{
+	background-color: #f00;
+}
+/*右*/
+.boxs .right {
+	transform: translateX(150px) translateY(calc(var(--boxHeight) * -3)) rotateY(90deg);
+}
+.boxs .right li{
+	background-color: #ff0;
+}
+/*上*/
+.boxs .top {
+	transform: translateY(calc(var(--boxHeight) * -4 - 150px)) rotateX(90deg);
+}
+.boxs .top li {
+	background-color: #f0f;
+}
+/*下*/
+.boxs .bottom{
+	transform: translateY(calc(var(--boxHeight) * -5 + 150px)) rotateX(-90deg);
+}
+.boxs .bottom li{
+	background-color: #0ff;
+}
